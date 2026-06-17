@@ -1,11 +1,13 @@
 import type { Vector3 } from "three";
 import type { PhysicsPlayer } from "./move.js";
 
-export * from "./move.js";
+export { PhysicsPlayer, type PhysicsWorld } from "./move.js";
 export * from "./consts.js";
 export * from "./raytrace.js";
 export * from "./blockstate.js";
 export * from "./materials/index.js";
+export { default as BlockPos, blockPosIterator } from "./BlockPos.js";
+export { default as Block, calculateIntercept } from "./block.js";
 
 export { default as Blocks } from "./blocks.js";
 

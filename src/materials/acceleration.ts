@@ -27,7 +27,9 @@ export default function handleMaterialAcceleration(
 				const L = R.block;
 				if (L.name === "liquid") {
 					const D =
-						T + 1 - BlockLiquid.getLiquidHeightPercent(R.getProp("level"));
+						T +
+						1 -
+						BlockLiquid.getLiquidHeightPercent(R.getProp("level"));
 					if (S >= D) {
 						w = true;
 						k = L.modifyAcceleration(world, E, plr, k);

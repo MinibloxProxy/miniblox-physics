@@ -13,7 +13,11 @@ function getIntermediateWithXValue(
 	if (dx * dx < 1.0000000116860974e-7) return null;
 	const t = (x - start.x) / dx;
 	return t >= 0 && t <= 1
-		? new Vector3(start.x + dx * t, start.y + (end.y - start.y) * t, start.z + (end.z - start.z) * t)
+		? new Vector3(
+				start.x + dx * t,
+				start.y + (end.y - start.y) * t,
+				start.z + (end.z - start.z) * t,
+			)
 		: null;
 }
 
@@ -26,7 +30,11 @@ function getIntermediateWithYValue(
 	if (dy * dy < 1.0000000116860974e-7) return null;
 	const t = (y - start.y) / dy;
 	return t >= 0 && t <= 1
-		? new Vector3(start.x + (end.x - start.x) * t, start.y + dy * t, start.z + (end.z - start.z) * t)
+		? new Vector3(
+				start.x + (end.x - start.x) * t,
+				start.y + dy * t,
+				start.z + (end.z - start.z) * t,
+			)
 		: null;
 }
 
@@ -39,20 +47,42 @@ function getIntermediateWithZValue(
 	if (dz * dz < 1.0000000116860974e-7) return null;
 	const t = (z - start.z) / dz;
 	return t >= 0 && t <= 1
-		? new Vector3(start.x + (end.x - start.x) * t, start.y + (end.y - start.y) * t, start.z + dz * t)
+		? new Vector3(
+				start.x + (end.x - start.x) * t,
+				start.y + (end.y - start.y) * t,
+				start.z + dz * t,
+			)
 		: null;
 }
 
 function isVecInYZ(box: Box3, vec: Vector3 | null): vec is Vector3 {
-	return vec != null && vec.y >= box.min.y && vec.y <= box.max.y && vec.z >= box.min.z && vec.z <= box.max.z;
+	return (
+		vec != null &&
+		vec.y >= box.min.y &&
+		vec.y <= box.max.y &&
+		vec.z >= box.min.z &&
+		vec.z <= box.max.z
+	);
 }
 
 function isVecInXZ(box: Box3, vec: Vector3 | null): vec is Vector3 {
-	return vec != null && vec.x >= box.min.x && vec.x <= box.max.x && vec.z >= box.min.z && vec.z <= box.max.z;
+	return (
+		vec != null &&
+		vec.x >= box.min.x &&
+		vec.x <= box.max.x &&
+		vec.z >= box.min.z &&
+		vec.z <= box.max.z
+	);
 }
 
 function isVecInXY(box: Box3, vec: Vector3 | null): vec is Vector3 {
-	return vec != null && vec.x >= box.min.x && vec.x <= box.max.x && vec.y >= box.min.y && vec.y <= box.max.y;
+	return (
+		vec != null &&
+		vec.x >= box.min.x &&
+		vec.x <= box.max.x &&
+		vec.y >= box.min.y &&
+		vec.y <= box.max.y
+	);
 }
 
 export function calculateIntercept(
@@ -76,11 +106,31 @@ export function calculateIntercept(
 
 	let v: Vector3 | null = null;
 	if (p != null) v = p;
-	if (g != null && (v == null || start.distanceToSquared(g) < start.distanceToSquared(v))) v = g;
-	if (y != null && (v == null || start.distanceToSquared(y) < start.distanceToSquared(v))) v = y;
-	if (x != null && (v == null || start.distanceToSquared(x) < start.distanceToSquared(v))) v = x;
-	if (S != null && (v == null || start.distanceToSquared(S) < start.distanceToSquared(v))) v = S;
-	if (b != null && (v == null || start.distanceToSquared(b) < start.distanceToSquared(v))) v = b;
+	if (
+		g != null &&
+		(v == null || start.distanceToSquared(g) < start.distanceToSquared(v))
+	)
+		v = g;
+	if (
+		y != null &&
+		(v == null || start.distanceToSquared(y) < start.distanceToSquared(v))
+	)
+		v = y;
+	if (
+		x != null &&
+		(v == null || start.distanceToSquared(x) < start.distanceToSquared(v))
+	)
+		v = x;
+	if (
+		S != null &&
+		(v == null || start.distanceToSquared(S) < start.distanceToSquared(v))
+	)
+		v = S;
+	if (
+		b != null &&
+		(v == null || start.distanceToSquared(b) < start.distanceToSquared(v))
+	)
+		v = b;
 	if (v == null) return null;
 
 	let side: EnumFacing;
@@ -148,11 +198,7 @@ export default class Block {
 		const localStart = start.clone().sub(new Vector3(pos.x, pos.y, pos.z));
 		const localEnd = end.clone().sub(new Vector3(pos.x, pos.y, pos.z));
 
-		const box = this.getCollisionBoundingBox(
-			{ block: this },
-			world,
-			pos,
-		);
+		const box = this.getCollisionBoundingBox({ block: this }, world, pos);
 		if (!box) return null;
 
 		const { min, max } = box;
@@ -166,47 +212,95 @@ export default class Block {
 
 		if (
 			xMin &&
-			(xMin.y < min.y || xMin.y > max.y || xMin.z < min.z || xMin.z > max.z)
+			(xMin.y < min.y ||
+				xMin.y > max.y ||
+				xMin.z < min.z ||
+				xMin.z > max.z)
 		)
 			xMin = null;
 		if (
 			xMax &&
-			(xMax.y < min.y || xMax.y > max.y || xMax.z < min.z || xMax.z > max.z)
+			(xMax.y < min.y ||
+				xMax.y > max.y ||
+				xMax.z < min.z ||
+				xMax.z > max.z)
 		)
 			xMax = null;
 		if (
 			yMin &&
-			(yMin.x < min.x || yMin.x > max.x || yMin.z < min.z || yMin.z > max.z)
+			(yMin.x < min.x ||
+				yMin.x > max.x ||
+				yMin.z < min.z ||
+				yMin.z > max.z)
 		)
 			yMin = null;
 		if (
 			yMax &&
-			(yMax.x < min.x || yMax.x > max.x || yMax.z < min.z || yMax.z > max.z)
+			(yMax.x < min.x ||
+				yMax.x > max.x ||
+				yMax.z < min.z ||
+				yMax.z > max.z)
 		)
 			yMax = null;
 		if (
 			zMin &&
-			(zMin.x < min.x || zMin.x > max.x || zMin.y < min.y || zMin.y > max.y)
+			(zMin.x < min.x ||
+				zMin.x > max.x ||
+				zMin.y < min.y ||
+				zMin.y > max.y)
 		)
 			zMin = null;
 		if (
 			zMax &&
-			(zMax.x < min.x || zMax.x > max.x || zMax.y < min.y || zMax.y > max.y)
+			(zMax.x < min.x ||
+				zMax.x > max.x ||
+				zMax.y < min.y ||
+				zMax.y > max.y)
 		)
 			zMax = null;
 
 		let closest: Vector3 | null = null;
-		if (xMin && (closest === null || localStart.distanceToSquared(xMin) < localStart.distanceToSquared(closest)))
+		if (
+			xMin &&
+			(closest === null ||
+				localStart.distanceToSquared(xMin) <
+					localStart.distanceToSquared(closest))
+		)
 			closest = xMin;
-		if (xMax && (closest === null || localStart.distanceToSquared(xMax) < localStart.distanceToSquared(closest)))
+		if (
+			xMax &&
+			(closest === null ||
+				localStart.distanceToSquared(xMax) <
+					localStart.distanceToSquared(closest))
+		)
 			closest = xMax;
-		if (yMin && (closest === null || localStart.distanceToSquared(yMin) < localStart.distanceToSquared(closest)))
+		if (
+			yMin &&
+			(closest === null ||
+				localStart.distanceToSquared(yMin) <
+					localStart.distanceToSquared(closest))
+		)
 			closest = yMin;
-		if (yMax && (closest === null || localStart.distanceToSquared(yMax) < localStart.distanceToSquared(closest)))
+		if (
+			yMax &&
+			(closest === null ||
+				localStart.distanceToSquared(yMax) <
+					localStart.distanceToSquared(closest))
+		)
 			closest = yMax;
-		if (zMin && (closest === null || localStart.distanceToSquared(zMin) < localStart.distanceToSquared(closest)))
+		if (
+			zMin &&
+			(closest === null ||
+				localStart.distanceToSquared(zMin) <
+					localStart.distanceToSquared(closest))
+		)
 			closest = zMin;
-		if (zMax && (closest === null || localStart.distanceToSquared(zMax) < localStart.distanceToSquared(closest)))
+		if (
+			zMax &&
+			(closest === null ||
+				localStart.distanceToSquared(zMax) <
+					localStart.distanceToSquared(closest))
+		)
 			closest = zMax;
 
 		if (closest === null) return null;
