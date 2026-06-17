@@ -6,6 +6,7 @@ export * from "./consts.js";
 export * from "./raytrace.js";
 export * from "./blockstate.js";
 export * from "./materials/index.js";
+export * from "./attributes.js";
 export { default as BlockPos, blockPosIterator } from "./BlockPos.js";
 export { default as Block, calculateIntercept } from "./block.js";
 
