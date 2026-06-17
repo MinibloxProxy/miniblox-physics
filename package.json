@@ -1,5 +1,10 @@
 {
 	"name": "@miniblox/physics",
+	"description": "1:1 accurate simulations of Miniblox physics for AntiCheats that are better than Vector's.",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/MinibloxProxy2/miniblox-physics.git"
+	},
 	"version": "3.44.10-0.0.0",
 	"module": "index.ts",
 	"type": "module",
